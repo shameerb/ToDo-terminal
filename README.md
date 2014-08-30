@@ -2,7 +2,7 @@ ToDO Terminal!
 ===================
 > **HINTS:**
 > - ***Help*** :
->![alt tag](https://github.com/shameerb/ToDo-terminal/tree/master/images/h.png)
+![alt tag](https://github.com/shameerb/ToDo-terminal/tree/master/images/h.png)
 
 > - Add a new **Task** as below :
 
