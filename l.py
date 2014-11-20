@@ -16,6 +16,7 @@ Style: DIM, NORMAL, BRIGHT, RESET_ALL
 init()
 
 headline=Fore.GREEN
+header=Fore.BLUE
 done_col=Fore.CYAN
 done_user=Fore.GREEN
 done_category=Fore.RED
@@ -32,7 +33,7 @@ reset_style=Style.RESET_ALL
 
 
 parser = OptionParser()
-PATH='D:/tutorial/python/training/source_code'
+PATH='C:/Users/shameerb/Downloads/Tutorials/python/python_training_self-master/python_training_self-master/source_code'
 FILE='toDo_4.dmp'
 os.chdir(PATH)
 l=[]
@@ -103,16 +104,42 @@ def read():
 
 '''Print the list'''
 def printL(lis,option='b'):
-    print headline, bright, 'LIST OF ToDo :',reset_font
+    print headline,  'LIST OF ToDo :',reset_font
+    print headline,
+    print '{0:3s}'.format('No'),
+    print " : ",
+    print '{:50s}'.format('Task Description'),
+    print '{:10s}'.format('User'),
+    print '{:10s}'.format('Group'),reset_font
+    
     #print lis
     for num,note in enumerate(lis,start=1):
         if option=='b':
             if note[1]=='N':
-                print done_col, bright, num,' : ', note[0], \
-                      done_user, note[2], done_category, note[3], reset_font
+                '''print 'done_col, bright, num, " : ", {:20s},\
+                      done_user, {:10s} , done_category, {:10s}, reset_font)'.format(note[0], note[2], note[3])'''
+                print done_col, 
+                print '{0:3d}'.format(num),
+                print " : ",
+                print '{:50s}'.format(note[0]),
+                print done_user,
+                print '{:10s}'.format(note[2]) ,
+                print done_category,
+                print '{:10s}'.format(note[3]),
+                print reset_font
+                
             else:
-                print pending_col, bright, num,' : ',note[0],\
-                      pending_user, note[2], pending_category, note[3], reset_font
+                '''print '(pending_col, bright, num, " : ", {:20s},\
+                      pending_user, {:10s} , pending_category, {:10s}, reset_font)'.format(note[0], note[2], note[3])'''
+                print pending_col,
+                print '{0:3d}'.format(num),
+                print " : ",
+                print '{:50s}'.format(note[0]),
+                print pending_user,
+                print '{:10s}'.format(note[2]) ,
+                print pending_category,
+                print '{:10s}'.format(note[3]),
+                print reset_font
                 
         elif option=='c':
             if note[1]=='N':
@@ -125,23 +152,80 @@ def printL(lis,option='b'):
                       pending_user, note[2], pending_category, note[3], reset_font
 
 '''print by group by category[3] / User[2] (default ->category[3])'''
-def printByCategoryOrUser(lis,groupon=3):
-    print headline, bright, 'LIST OF ToDo',reset_font,
+def printByCategoryOrUser(lis,groupon=3, category='', user='' ):
+    filterBy=''
     if groupon == 3:
-        print headline, bright, 'GROUPED BY CATEGORY ',reset_font
+        print headline, 'GROUPED BY CATEGORY ',reset_font
+        filterBy=category
     elif groupon == 2:
-        print headline, bright, 'GROUPED BY USER ',reset_font
-    for category, l_byCategory in groupby(lis, key=lambda x: x[groupon]):
-        print headline, bright, category
-        
-        for num,single_items in enumerate(l_byCategory, start=1):
+        print headline, 'GROUPED BY USER ',reset_font
+        filterBy=user
+    #print filterBy 
+    print headline,  'LIST OF ToDo :',reset_font
+    print headline,
+    print '{0:3s}'.format('No'),
+    print " : ",
+    print '{:50s}'.format('Task Description'),
+    print '{:10s}'.format('User'),
+    print '{:10s}'.format('Group'),reset_font
+
+    if not filterBy=='':
+        #print 'within if'
+        for category, l_byCategory in groupby(lis, key=lambda x: x[groupon]):
+            #print category,list(l_byCategory)
+            #print str(filterBy),str(category)
+            #print len(filterBy),len(category)
+            if str(filterBy).lower() in str(category).lower():
+                #print headline, category
+                for num,single_items in enumerate(l_byCategory, start=1):
+                    if single_items[1]=='N':
+                        print done_col, 
+                        print '{0:3d}'.format(num),
+                        print " : ",
+                        print '{:50s}'.format(single_items[0]),
+                        print done_user,
+                        print '{:10s}'.format(single_items[2]) ,
+                        print done_category,
+                        print '{:10s}'.format(single_items[3]),
+                        print reset_font
+                    else:
+                        print pending_col,
+                        print '{0:3d}'.format(num),
+                        print " : ",
+                        print '{:50s}'.format(single_items[0]),
+                        print pending_user,
+                        print '{:10s}'.format(single_items[2]) ,
+                        print pending_category,
+                        print '{:10s}'.format(single_items[3]),
+                        print reset_font
+                    
+    else:
+        print 'within else'
+        for category, l_byCategory in groupby(lis, key=lambda x: x[groupon]):
+            #print category
+            for num,single_items in enumerate(l_byCategory, start=1):
+                if single_items[1]=='N':
+                    print done_col, 
+                    print '{0:3d}'.format(num),
+                    print " : ",
+                    print '{:50s}'.format(single_items[0]),
+                    print done_user,
+                    print '{:10s}'.format(single_items[2]) ,
+                    print done_category,
+                    print '{:10s}'.format(single_items[3]),
+                    print reset_font
+                else:
+                    print pending_col,
+                    print '{0:3d}'.format(num),
+                    print " : ",
+                    print '{:50s}'.format(single_items[0]),
+                    print pending_user,
+                    print '{:10s}'.format(single_items[2]) ,
+                    print pending_category,
+                    print '{:10s}'.format(single_items[3]),
+                    print reset_font
             
-            if single_items[1]=='N':
-                print done_col, bright, num,' : ', single_items[0], \
-                      done_user, single_items[2], done_category, single_items[3], reset_font
-            else:
-                print pending_col, bright, num,' : ', single_items[0], \
-                      pending_user, single_items[2], pending_category, single_items[3], reset_font
+
 
 '''Write into the list'''
 def write(lis):
@@ -170,11 +254,16 @@ elif opt=='l':
     printL(l,'b')
 
 elif opt=='g':
-    printByCategoryOrUser(l,3)
+    for text in args:        
+        printByCategoryOrUser(l,3,category=text)
+    #else:
+     #   printByCategoryOrUser(l,3)
 
 elif opt=='u':
-    printByCategoryOrUser(l,2)
-    
+    for text in args:        
+        printByCategoryOrUser(l,2,user=text)
+    #else:
+     #   printByCategoryOrUser(l,2)
 elif opt=='t':
     write(l)
     for text in args:
